@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Simulation>
+
+@using pam_Web.Models
+
+@if (Model.Count() == 0)
+{
+    <h2>La liste des simulations est vide</h2>
+}
+@{ int numSim = 1;
+    string refColor = "impair";
+    bool isFirstColor = true;
+    }
+@if (Model.Count() != 0)//remplacable par else
+{
+
+    <h2>Liste des simulations</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <span class="libellé">N°</span>
+                </td>
+                <td>
+                    <span class="libellé">Nom</span>
+                </td>
+                <td>
+                    <span class="libellé">Prénom</span>
+                </td>
+                <td>
+                    <span class="libellé">Heures travaillées</span>
+                </td>
+                <td>
+                    <span class="libellé">Jours travaillés</span>
+                </td>
+                <td>
+                    <span class="libellé">Salaire de base</span>
+                </td>
+                <td>
+                    <span class="libellé">Indemnités</span>
+                </td>
+                <td>
+                    <span class="libellé">Cotisations sociales</span>
+                </td>
+                <td>
+                    <span class="libellé">Salaire net</span>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Simulation simulation in Model)
+            {
+                @*isFirstColor = !isFirstColor;
+                if (isFirstColor)
+                {
+                    refColor = "pair";
+                }*@
+                @*if (numSim % 2 == 0)
+                {
+                    refColor = "pair";
+                }
+                else
+                {
+                    refColor = "impair";
+                }*@
+
+                double indem = simulation.FeuilleSalaire.ElementSalaires.IndemnitesEntretien + simulation.FeuilleSalaire.ElementSalaires.IndemnitesRepas;
+                <tr class="@(isFirstColor?"pair":"impair")">
+                    <td>
+                        <span class="valeur">@numSim</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.FeuilleSalaire.Employe.Nom</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.FeuilleSalaire.Employe.Prenom</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.HeuresTravaillees</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.JoursTravaillees</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.FeuilleSalaire.ElementSalaires.SalaireBase</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@indem</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.FeuilleSalaire.ElementSalaires.CotisationSociales</span>
+                    </td>
+                    <td>
+                        <span class="valeur">@simulation.FeuilleSalaire.ElementSalaires.SalaireNet</span>
+                    </td>
+                    <td><a href="javascript:retirerSimulation(@numSim)">retirer</a></td>
+                </tr>
+                numSim++;
+            }
+        </tbody>
+    </table>
+}

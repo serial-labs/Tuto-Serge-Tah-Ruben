@@ -1,0 +1,26 @@
+﻿@model pam_Web.Models.IndexModel
+
+@using (Html.BeginForm("FaireSimulation","Pam",FormMethod.Post, new { id="formulaire"}))
+{
+<table>
+    <thead>
+        <tr>
+            <th>@Html.LabelFor(mo => mo.SS)</th>
+            <th>@Html.LabelFor(m => m.HeuresTravaillees)</th>
+            <th>@Html.LabelFor(m => m.joursTravaillees)</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DropDownListFor(m => m.Application.Employes, new SelectList(@Model.Application.EmployesItems, "Value", "Text"))</td>
+            <td>@Html.EditorFor(m => m.HeuresTravaillees)</td>
+            <td>@Html.EditorFor(m => m.joursTravaillees)</td>
+        </tr>
+        <tr>
+            <td>@Html.ValidationMessageFor(m => m.Application.EmployesItems)</td>
+            <td>@Html.ValidationMessageFor(m =>m.HeuresTravaillees) </td>
+            <td>@Html.ValidationMessageFor(m=>m.joursTravaillees)</td>
+        </tr>
+    </tbody>
+</table>
+}
+<div id="simulation" />

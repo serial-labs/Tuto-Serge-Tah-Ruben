@@ -1,0 +1,10 @@
+﻿@model  IEnumerable<string>
+
+<hr />
+<h2>Les erreurs suivantes se sont produites</h2>
+<ul>
+    @foreach(string msg in Model)
+    {
+        <li>@msg</li>
+    }
+</ul>
