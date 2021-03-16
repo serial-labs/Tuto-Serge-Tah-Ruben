@@ -1,4 +1,4 @@
-﻿using pam_td.Metier.entite;
+﻿using Pam.Metier.Entites;
 using pam_Web.Infrastructure;
 using pam_Web.Models;
 using System;
@@ -16,6 +16,12 @@ namespace pam_Web.Controllers
         [HttpGet]
         public ViewResult Index(ApplicationModel application)
         {
+            if (application.InitException != null)
+            {
+                return View("InitFailed", Static.GetErreursForException(application.InitException));
+            }
+
+
             return View(new IndexModel() { Application = application});
         }
 

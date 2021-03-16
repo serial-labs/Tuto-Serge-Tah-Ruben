@@ -1,6 +1,3 @@
-using pam_td.Metier;
-using pam_td.Metier.entite;
-using pam_td.Metier.service;
 using pam_Web.Infrastructure;
 using pam_Web.Models;
 using System;
@@ -10,6 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Spring.Context.Support;
+using Pam.Metier.Service;
+using Pam.EF5.Entites;
 
 namespace pam_Web
 {
@@ -31,18 +31,28 @@ namespace pam_Web
             Application["data"] = application;
             Employe employe = new Employe();
             //instanciation couche metier
-            application.pamMetier = new PamMetier();
-            
-            //tableau des employes
-            application.Employes = application.pamMetier.GetAllIdentitesEmployes();
+            //application.pamMetier = new PamMetier();
 
-
-            // elements du combo des employes
-            int nbEmpolyees = application.Employes.Length;
-            application.EmployesItems = new SelectListItem[nbEmpolyees];
-            for (int i = 0; i < nbEmpolyees; i++)
+            try
             {
-                application.EmployesItems[i] = new SelectListItem() { Text = application.Employes[i].Nom + " " + application.Employes[i].Prenom, Value = application.Employes[i].SS };
+                application.pamMetier = ContextRegistry.GetContext().GetObject("pammetier") as IPamMetier;
+            }catch(Exception ex)
+            {
+                application.InitException = ex;
+            }
+            if (application.InitException == null)
+            {
+                //tableau des employes
+                application.Employes = application.pamMetier.GetAllIdentitesEmployes();
+
+
+                // elements du combo des employes
+                int nbEmpolyees = application.Employes.Length;
+                application.EmployesItems = new SelectListItem[nbEmpolyees];
+                for (int i = 0; i < nbEmpolyees; i++)
+                {
+                    application.EmployesItems[i] = new SelectListItem() { Text = application.Employes[i].Nom + " " + application.Employes[i].Prenom, Value = application.Employes[i].SS };
+                }
             }
             //model binders
             ModelBinders.Binders.Add(typeof(ApplicationModel), new ApplicationModelBinder());

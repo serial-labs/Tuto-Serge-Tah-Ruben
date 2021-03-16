@@ -1,5 +1,5 @@
-﻿using pam_td.Metier.entite;
-using pam_td.Metier.service;
+﻿using Pam.EF5.Entites;
+using Pam.Metier.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace pam_Web.Models
 
         public SelectListItem[] EmployesItems {get;set;}
 
+        public Exception InitException { get; set; }
 
     }
 }

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<string>
+@{ 
+    Layout = null;
+}
+<!DCOTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="~/Content/Site.css"/>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <h2>Simulateur de calcul de paie</h2>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <h2>Les erreurs suivantes se sont produites à l'initialisation de l'application :</h2>
+    <ul>
+        @foreach(string msg in Model)
+        {
+            <li>@msg</li>
+        }
+    </ul>
+</body>
+</html>

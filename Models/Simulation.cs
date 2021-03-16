@@ -1,4 +1,4 @@
-﻿using pam_td.Metier.entite;
+﻿using Pam.Metier.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
